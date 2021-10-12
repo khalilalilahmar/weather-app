@@ -60,16 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     search = value;
                   },
                   decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.clear,
+                          Icons.search_sharp,
                           color: Colors.white,
+                          size: 40,
                         ),
                         onPressed: () {
+                          context.read<WeatherViewModelCubit>().doSearch(search);
                           /* Clear the search field */
                         },
                       ),
@@ -79,36 +77,48 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              body: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
+              body: BlocBuilder<WeatherViewModelCubit, WeatherModel>(
+                builder: (context, _weatherModel) {
+                  if(_weatherModel!.cod != null)
+                    weatherModel = _weatherModel;
+                  return SingleChildScrollView(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            '${weatherModel!.city!.name} ( ${weatherModel.city!
+                                .coord!.lat}, ${weatherModel.city!.coord!
+                                .lon})',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('${weatherModel!.city!.name})'),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          IconFile.getWeatherIcones(
+                              weatherDescription: weatherModel.list!.first
+                                  .weather!.first!.main,
+                              color: Colors.pink,
+                              size: 150.3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _getcontainer1(),
+                          Divider(color: Colors.greenAccent, thickness: 1,),
+                          _getcontainer2(),
+                          _getcontainer3(),
+                        ],
                       ),
-                      Text(
-                        '${weatherModel!.city!.name} ( ${weatherModel.city!.coord!.lat}, ${weatherModel.city!.coord!.lon})',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('${weatherModel!.city!.name})'),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      IconFile.getWeatherIcones(weatherDescription: weatherModel.list!.first.weather!.first!.main, color: Colors.pink, size: 150.3),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      _getcontainer1(),
-                      Divider(color: Colors.greenAccent, thickness: 1,),
-                      _getcontainer2(),
-                      _getcontainer3(),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                }
               ),
             ); // snapshot.data  :- get your object which is pass from your downloadData() function
           }
@@ -173,6 +183,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Row _getcontainer3(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 2,
+        ),
+        IconFile.getWeatherIcones(color: Colors.brown, size: 20, weatherDescription: "Hum"),
+        SizedBox(
+          width: 35,
+        ),
+        IconFile.getWeatherIcones(color: Colors.brown, size: 20, weatherDescription: "Smile"),
+        SizedBox(
+          width: 35,
+        ),
+        IconFile.getWeatherIcones(color: Colors.brown, size: 20, weatherDescription: "Thermo"),
+      ],
+    );
+  }
+
+  Row _getcontainer4(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

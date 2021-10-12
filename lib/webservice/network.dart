@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class Network{
 
- static Future<WeatherModel> fetchWeather({String cityName = "Montpellier"}) async {
+ static Future<WeatherModel> fetchWeather({required String cityName}) async {
     final url = Uri.parse(WeatherClient.baseURL+ "$cityName" + WeatherClient.AppId);
     final response = await http.get(url);
        print(response.statusCode);
