@@ -3,8 +3,8 @@ import 'dart:core' as core;
 
 class WeatherModel {
   String? cod;
-  int? message;
-  int? cnt;
+  num? message;
+  num? cnt;
   core.List<List>? list;
   City? city;
 
@@ -44,13 +44,13 @@ class WeatherModel {
 }
 
 class List {
-  int? dt;
+  num? dt;
   Main? main;
   core.List<Weather>? weather;
   Clouds? clouds;
   Wind? wind;
-  int? visibility;
-  int? pop;
+  num? visibility;
+  num? pop;
   Sys? sys;
   String? dtTxt;
 
@@ -118,10 +118,10 @@ class Main {
   num? feelsLike;
   num? tempMin;
   num? tempMax;
-  int? pressure;
-  int? seaLevel;
-  int? grndLevel;
-  int? humidity;
+  num? pressure;
+  num? seaLevel;
+  num? grndLevel;
+  num? humidity;
   num? tempKf;
 
   Main(
@@ -168,7 +168,7 @@ class Main {
 }
 
 class Weather {
-  int? id;
+  num? id;
   String? main;
   String? description;
   String? icon;
@@ -198,7 +198,7 @@ class Weather {
 }
 
 class Clouds {
-  int? all;
+  num? all;
 
   Clouds({this.all});
 
@@ -215,7 +215,7 @@ class Clouds {
 
 class Wind {
   num? speed;
-  int? deg;
+  num? deg;
   num? gust;
 
   Wind({this.speed, this.deg, this.gust});
@@ -252,14 +252,14 @@ class Sys {
 }
 
 class City {
-  int? id;
+  num? id;
   String? name;
   Coord? coord;
   String? country;
-  int? population;
-  int? timezone;
-  int? sunrise;
-  int? sunset;
+  num? population;
+  num? timezone;
+  num? sunrise;
+  num? sunset;
 
   City(
       {this.id,
