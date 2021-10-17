@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:meteo/model/weather_model.dart';
 import 'package:meteo/utils/icon_file.dart';
 import 'package:meteo/viewmodel/weather_view_model_cubit.dart';
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text('${weatherModel!.city!.name})'),
+                        Text('${DateFormat.yMMMMEEEEd().format(DateTime.now())}'),
                         SizedBox(
                           height: 20,
                         ),
@@ -119,7 +120,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        _getcontainer4(),
+                        Text(
+                          "Prévison des 3 derniers jours",
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(child: _getcontainer4(weatherModel.list!.elementAt(1).main, weatherModel.list!.elementAt(1).weather!.first)),
+                            Flexible(child: _getcontainer4(weatherModel.list!.elementAt(2).main, weatherModel.list!.elementAt(2).weather!.first)),
+                            Flexible(child: _getcontainer4(weatherModel.list!.elementAt(3).main, weatherModel.list!.elementAt(3).weather!.first))
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -205,27 +219,37 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Row _getcontainer4() {
+  Row _getcontainer4(Main? main, Weather? weather) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Colors.deepPurpleAccent,
-            Colors.white,
-          ],
-        )),
-        child: Row(
-          children: [
-            Text("Samedi"),
-            Column(
-            )
-          ],
-        ),)
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.deepPurpleAccent,
+              Colors.white,
+            ],
+          )),
+          child: Column(
+            children: [
+              Text("Jour j+"),
+              Container(
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconFile.getWeatherIcones(
+                        color: Colors.pink, size: 20, weatherDescription: weather!.main)),
+                  ),
+              Text(main!.tempMin.toString() + "F"),
+              Text(main!.tempMax.toString() + "F"),
+              Text(main!.humidity.toString()),
+              Text(main!.pressure.toString())
+            ],
+          ),
+        ),
       ],
     );
   }
