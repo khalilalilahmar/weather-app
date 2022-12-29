@@ -7,13 +7,8 @@ class WeatherViewModelCubit extends Cubit<WeatherModel>{
 
   WeatherViewModelCubit() : super(WeatherModel());
 
-  WeatherModel doSearch (String cityName){
-    Network.fetchWeather(cityName: cityName).then((value) {
-      weatherModel = value;
-    }).catchError(onError)
-        .whenComplete(() {
-          print("La requete est terminée");
-    });
+  Future<WeatherModel> doSearch (String cityName) async {
+    weatherModel = await Network.fetchWeather(cityName: cityName);
     emit(weatherModel);
     return weatherModel;
   }

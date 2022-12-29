@@ -1,11 +1,9 @@
-import 'dart:core' show List, Map, String, bool, num, dynamic, int, num, override;
-import 'dart:core' as core;
 
 class WeatherModel {
   String? cod;
   num? message;
   num? cnt;
-  core.List<List>? list;
+  List<ListModel>? list;
   City? city;
 
   WeatherModel({this.cod, this.message, this.cnt,  this.list, this.city});
@@ -17,7 +15,7 @@ class WeatherModel {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list!.add(new List.fromJson(v));
+        list!.add(new ListModel.fromJson(v));
       });
     }
     city = json['city'] != null ? new City.fromJson(json['city']) : null;
@@ -43,10 +41,10 @@ class WeatherModel {
   }
 }
 
-class List {
+class ListModel {
   num? dt;
   Main? main;
-  core.List<Weather>? weather;
+  List<Weather>? weather;
   Clouds? clouds;
   Wind? wind;
   num? visibility;
@@ -54,7 +52,7 @@ class List {
   Sys? sys;
   String? dtTxt;
 
-  List(
+  ListModel(
       {required this.dt,
         required this.main,
         required this.weather,
@@ -65,7 +63,7 @@ class List {
         required this.sys,
         required this.dtTxt});
 
-  List.fromJson(Map<String, dynamic> json) {
+  ListModel.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
     main = (json['main'] != null ? new Main.fromJson(json['main']) : null)!;
     if (json['weather'] != null) {
